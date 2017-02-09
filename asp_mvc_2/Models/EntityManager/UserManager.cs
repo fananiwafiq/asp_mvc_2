@@ -8,6 +8,17 @@ namespace asp_mvc_2.Models.EntityManager
 {
     public class UserManager
     {
+        public string GetUserPassword(string loginName)
+        {
+            using (DemoDBEntities db = new DemoDBEntities())
+            {
+                var user = db.SYSUsers.Where(o => o.LoginName.ToLower().Equals(loginName));
+                if (user.Any())
+                    return user.FirstOrDefault().PasswordEncryptedText;
+                else
+                    return string.Empty;
+            }
+        }
         public void AddUserAccount(UserSignUpView user)
         {
             using (DemoDBEntities db = new DemoDBEntities())
